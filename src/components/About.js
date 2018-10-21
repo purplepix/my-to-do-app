@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Pokeball from '../brazil-flag.jpg';
+//conectar o componente atual ao store
+import { connect } from 'react-redux';
 
 class About extends Component {
-  state = {
-    posts: []
-  }
-  componentDidMount() {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(res => {
-        this.setState({
-          posts: res.data.slice(0,10)
-        })
-      })
-  }
+  // QUANDO SE USA REDUX OS STATES FICAM DENTRO DE STORE
+  // state = {
+  //   posts: []
+  // }
+  // componentDidMount() {
+  //   axios.get('https://jsonplaceholder.typicode.com/posts')
+  //     .then(res => {
+  //       this.setState({
+  //         posts: res.data.slice(0,10)
+  //       })
+  //     })
+  // }
   render() {
-    const { posts } = this.state;
+    console.log(this.props);
+
+    const { posts } = this.props;
     const postLists = posts.length ? (
       posts.map(post => {
         return (
@@ -43,4 +48,10 @@ class About extends Component {
   }
 } 
 
-export default About;
+const mapStateToProps = state => {
+  return {
+    posts: state.posts
+  }
+}
+
+export default connect(mapStateToProps)(About);
